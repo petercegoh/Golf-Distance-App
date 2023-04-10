@@ -13,14 +13,17 @@ form {
     border-bottom: 2px solid #ccc;
     font-size: 18px;
   }
-  
+  label {
+    font-size: 40px;
+  }
+
   select {
     padding: 10px;
     margin: 10px;
     width: 300px;
     border: none;
     border-bottom: 2px solid #ccc;
-    font-size: 18px;
+    font-size: 40px;
     /*background-color: #fff;
     color: #333;
     font-size: 40px;

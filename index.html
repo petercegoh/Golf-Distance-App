@@ -9,7 +9,7 @@
   </head>
   <body>
     <form>
-      <label for="hole">1Choose what hole you are playing:</label>
+      <label for="hole">Choose what hole you are playing:</label>
       <select id="hole" name="hole" size="8">
         <option value="none" selected>Hole</option>
         <option value="1">1</option>
@@ -52,7 +52,9 @@
         <option value="Putter">Putter</option>
       </select>
 
+      <label for="button">Every time before you hit a ball, record your location using this button</label>
       <button type="button" onclick="getLocation()">Save Position/Calculate Distance</button>
+      <label for="button">If the ball rolls in, press this button</label>
       <button type="button" onclick="finishHole()">Holed it!</button>
 
 
