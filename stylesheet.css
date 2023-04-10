@@ -13,6 +13,15 @@ form {
     border-bottom: 2px solid #ccc;
     font-size: 18px;
   }
+  
+  select {
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    font-size: 18px;
+  }
 
   button {
     padding: 10px;
