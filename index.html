@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Distance Calculator</title>
+    <style>
+      /* CSS styling for the form */
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+      }
+
+      input[type=number] {
+        padding: 10px;
+        margin: 10px;
+        width: 300px;
+        border: none;
+        border-bottom: 2px solid #ccc;
+        font-size: 18px;
+      }
+
+      button {
+        padding: 10px;
+        margin: 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      #map {
+        height: 400px;
+        width: 100%;
+        margin-top: 50px;
+        
+      }
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        }
+        
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="hole">Choose what hole you are playing:</label>
+      <select id="hole" name="hole" size="8" multiple>
+        <option value="none" selected disabled hidden>Hole</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+      </select>
+
+      <label for="club">Select your club:</label>
+      <select id="club" name="club" size="8" multiple>
+        <option value="none" selected disabled hidden>Club</option>
+        <option value="Driver">Driver</option>
+        <option value="3 Wood">3 Wood</option>
+        <option value="5 Wood">5 Wood</option>
+        <option value="Hybrid">Hybrid</option>
+        <option value="3 Iron">3 Iron</option>
+        <option value="4 Iron">4 Iron</option>
+        <option value="5 Iron">5 Iron</option>
+        <option value="6 Iron">6 Iron</option>
+        <option value="7 Iron">7 Iron</option>
+        <option value="8 Iron">8 Iron</option>
+        <option value="9 Iron">9 Iron</option>
+        <option value="Pw">Pw</option>
+        <option value="Sw">Sw</option>
+        <option value="Lw">Lw</option>
+        <option value="Putter">Putter</option>
+      </select>
+
+      <button type="button" onclick="getLocation()">Save Position/Calculate Distance</button>
+      <button type="button" onclick="finishHole()">Holed it!</button>
+
+
+    </form>
+    <table id="dist_table">
+        <tr>
+            <th>Hole Number</th>
+            <th>Position Number/Score</th>
+            <th>Coordinate Latitude</th>
+            <th>Coordinate Longitude</th>
+            <th>Club</th>
+            <th>Shot Distance</th>
+            <th>Distance to Hole</th>
+        </tr>
+
+    </table>
+    <div id="map"></div>
+    <script>
+        island_18_holes = [[1.362970, 103.819236], [1.364979, 103.820669],[1.360885, 103.819652],[1.364316, 103.820800],[1.365122, 103.821970],[1.367028, 103.824245],[1.364050, 103.822643],[1.362663, 103.820329],[1.360885, 103.819652],[1.360398, 103.819203],[1.362629, 103.821070],[1.363800, 103.824798],[],[],[],[],[],[]]
+        let list = [];
+        let counter = 0;
+        var Lat1 = null;
+        var Lng1 = null;
+
+        function calculateDistance() {
+                alert("Function Started");
+            if (document.getElementById("hole").value == "none") {
+              alert("Please select which Hole you are playing");
+              return;
+            }
+            counter = counter + 1;
+            const point1 = new google.maps.LatLng(Lat1, Lng1);
+            //alert("Current location" + point1);
+            
+            hole_no = document.getElementById("hole").value
+            //alert("Hole Number: " + hole_no)
+
+            club_choice = document.getElementById("club").value
+
+            const destination_point = new google.maps.LatLng(island_18_holes[hole_no - 1][0], island_18_holes[hole_no - 1][1]);
+            //alert("Coords of hole " + hole_no + ": " + destination_point)
+            list.push(point1)
+            //alert("List of points: " + list)
+            //alert("Number of points: " + list.length)
+            if (list.length >= 2) {
+                var distance = google.maps.geometry.spherical.computeDistanceBetween(list[counter - 2], list[counter - 1]);
+                //alert("Shot Distance: " + distance);
+            } else {
+              var distance = "NIL";
+            }
+            var distance_to_hole = google.maps.geometry.spherical.computeDistanceBetween(list[counter - 1], destination_point)
+            //alert("Distance to hole: " + distance_to_hole)
+            var table = document.getElementById("dist_table");
+            var row = table.insertRow()
+            var cell1 = row.insertCell(-1);
+            var cell2 = row.insertCell(-1);
+            var cell3 = row.insertCell(-1);
+            var cell4 = row.insertCell(-1);
+            var cell5 = row.insertCell(-1);
+            var cell6 = row.insertCell(-1);
+            var cell7 = row.insertCell(-1);
+            cell1.innerHTML = hole_no;
+            cell2.innerHTML = counter;
+            cell3.innerHTML = Lat1;
+            cell4.innerHTML = Lng1;
+            cell5.innerHTML = club_choice
+            cell6.innerHTML = Math.round(distance*10)/10;
+            cell7.innerHTML = Math.round(distance_to_hole*10)/10;
+          }
+        
+        function finishHole() {
+          alert("holed it function started");
+          //counter = counter + 1;
+          hole_no = document.getElementById("hole").value;
+          alert("Hole Number: " + hole_no);
+          club_choice = document.getElementById("club").value
+          const destination_point = new google.maps.LatLng(island_18_holes[hole_no - 1][0], island_18_holes[hole_no - 1][1]);
+          var distance = google.maps.geometry.spherical.computeDistanceBetween(destination_point, list[counter - 1]);
+          alert("Shot Distance: " + distance);
+          var table = document.getElementById("dist_table");
+            var row = table.insertRow()
+            var cell1 = row.insertCell(-1);
+            var cell2 = row.insertCell(-1);
+            var cell3 = row.insertCell(-1);
+            var cell4 = row.insertCell(-1);
+            var cell5 = row.insertCell(-1);
+            var cell6 = row.insertCell(-1);
+            var cell7 = row.insertCell(-1);
+            cell1.innerHTML = hole_no;
+            cell2.innerHTML = counter;
+            cell3.innerHTML = island_18_holes[hole_no - 1][0];
+            cell4.innerHTML = island_18_holes[hole_no - 1][1];
+            cell5.innerHTML = club_choice
+            cell6.innerHTML = Math.round(distance*10)/10;
+            cell7.innerHTML = 0;
+            list = []
+            counter = 0
+            var table = document.getElementById("dist_table");
+            var separatorRow = table.insertRow();
+            var separatorCell = separatorRow.insertCell(0);
+            separatorCell.colSpan = 7; // span all columns in the table
+            //separatorCell.innerHTML = "<hr>";
+            separatorCell.style.borderTop = "5px solid black";
+
+          }
+
+        function showPosition(position) {
+              Lat1 = position.coords.latitude
+              Lng1 = position.coords.longitude
+              //alert("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
+              calculateDistance()
+            }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition) 
+            } else {
+              alert("Geolocation is not supported by this browser.");
+            }
+            }
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLiRWHgBfiUwIzOl1y2SJu8lChZvBP1RA&libraries=geometry">
+
+    </script>
+  </body>
+</html>
