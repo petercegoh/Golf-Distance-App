@@ -52,9 +52,9 @@
         <option value="Putter">Putter</option>
       </select>
 
-      <label for="button">Every time before you hit a ball, record your location using this button</label>
+      <label for="button">Every time before you hit a ball, record your location using this button to view your distance to the hole</label>
       <button type="button" onclick="getLocation()">Save Position/Calculate Distance</button>
-      <label for="button">If the ball rolls in, press this button</label>
+      <label for="button">If the ball rolls in, press this button to complete the hole</label>
       <button type="button" onclick="finishHole()">Holed it!</button>
 
 
@@ -177,7 +177,7 @@
             }
 
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLiRWHgBfiUwIzOl1y2SJu8lChZvBP1RA&libraries=geometry">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLiRWHgBfiUwIzOl1y2SJu8lChZvBP1RA&libraries=geometry,elevation">
 
     </script>
   </body>
