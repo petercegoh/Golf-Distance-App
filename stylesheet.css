@@ -50,8 +50,6 @@ form {
     
   }
   table, th, td {
-    display: inline-block;
-    width: 45%;
     border: 1px solid black;
     border-collapse: collapse;
     margin: auto;
