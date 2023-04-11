@@ -53,7 +53,7 @@
       </select>
 
       <label for="button">Every time before you hit a ball, record your location using this button to view your distance to the hole</label>
-      <button type="button" onclick="getLocation()">Save Position/Calculate Distance</button>
+      <button type="button" onclick="getLocation()">Check your distance to the hole</button>
       <label for="button">If the ball rolls in, press this button to complete the hole</label>
       <button type="button" onclick="finishHole()">Holed it!</button>
 
@@ -135,7 +135,7 @@
               var cell3 = strokerow.insertCell(-1);
               var cell4 = strokerow.insertCell(-1);
               cell1.innerHTML = hole_no
-              cell2.innerHTML = counter
+              cell2.innerHTML = counter - 1
               cell3.innerHTML = club_list[counter - 2]
               cell4.innerHTML = Math.round(distance*10)/10;
             }
@@ -178,7 +178,14 @@
             var table = document.getElementById("dist_table");
             var separatorRow = table.insertRow();
             var separatorCell = separatorRow.insertCell(0);
-            separatorCell.colSpan = 7; // span all columns in the table
+            separatorCell.colSpan = 5; // span all columns in the table
+            //separatorCell.innerHTML = "<hr>";
+            separatorCell.style.borderTop = "5px solid black";
+
+            var stroketable = document.getElementById("stroke_table");
+            var separatorRow = stroketable.insertRow();
+            var separatorCell = separatorRow.insertCell(0);
+            separatorCell.colSpan = 4; // span all columns in the table
             //separatorCell.innerHTML = "<hr>";
             separatorCell.style.borderTop = "5px solid black";
 
