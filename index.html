@@ -62,14 +62,19 @@
     <table id="dist_table">
         <tr>
             <th>Hole</th>
-            <th>Score</th>
+            <th>Pos.No.</th>
             <th>Coord Lat</th>
             <th>Coord Long</th>
-            <th>Club</th>
-            <th>Shot Distance</th>
             <th>Distance to Hole</th>
         </tr>
-
+    </table>
+    <table id="stroke_table">
+      <tr>
+          <th>Hole</th>
+          <th>Score</th> 
+          <th>Club</th>   
+          <th>Shot Distance</th>      
+      </tr>
     </table>
     <div id="map"></div>
     <script>
@@ -78,6 +83,7 @@
         let counter = 0;
         var Lat1 = null;
         var Lng1 = null;
+        let club_list = []
 
         function calculateDistance() {
                 alert("Function Started");
@@ -93,6 +99,7 @@
             //alert("Hole Number: " + hole_no)
 
             club_choice = document.getElementById("club").value
+            club_list.push(club_choice)
 
             const destination_point = new google.maps.LatLng(island_18_holes[hole_no - 1][0], island_18_holes[hole_no - 1][1]);
             //alert("Coords of hole " + hole_no + ": " + destination_point)
@@ -106,6 +113,7 @@
               var distance = "NIL";
             }
             var distance_to_hole = google.maps.geometry.spherical.computeDistanceBetween(list[counter - 1], destination_point)
+            var elevation_to_hole = google.maps.elevationService()
             //alert("Distance to hole: " + distance_to_hole)
             var table = document.getElementById("dist_table");
             var row = table.insertRow()
@@ -114,15 +122,24 @@
             var cell3 = row.insertCell(-1);
             var cell4 = row.insertCell(-1);
             var cell5 = row.insertCell(-1);
-            var cell6 = row.insertCell(-1);
-            var cell7 = row.insertCell(-1);
             cell1.innerHTML = hole_no;
             cell2.innerHTML = counter;
             cell3.innerHTML = Lat1.toFixed(5)
             cell4.innerHTML = Lng1.toFixed(5)
-            cell5.innerHTML = club_choice
-            cell6.innerHTML = Math.round(distance*10)/10;
-            cell7.innerHTML = Math.round(distance_to_hole*10)/10;
+            cell5.innerHTML = Math.round(distance_to_hole*10)/10;
+
+            if (counter > 1) {
+              var stroketable = document.getElementById("stroke_table");
+              var strokerow = stroketable.insertRow();
+              var cell1 = strokerow.insertCell(-1);
+              var cell2 = strokerow.insertCell(-1);
+              var cell3 = strokerow.insertCell(-1);
+              var cell4 = strokerow.insertCell(-1);
+              cell1.innerHTML = hole_no
+              cell2.innerHTML = counter
+              cell3.innerHTML = club_list[counter - 1]
+              cell4.innerHTML = Math.round(distance*10)/10;
+            }
           }
         
         function finishHole() {
@@ -133,7 +150,7 @@
           club_choice = document.getElementById("club").value
           const destination_point = new google.maps.LatLng(island_18_holes[hole_no - 1][0], island_18_holes[hole_no - 1][1]);
           var distance = google.maps.geometry.spherical.computeDistanceBetween(destination_point, list[counter - 1]);
-          alert("Shot Distance: " + distance);
+          //alert("Shot Distance: " + distance);
           var table = document.getElementById("dist_table");
             var row = table.insertRow()
             var cell1 = row.insertCell(-1);
@@ -141,15 +158,22 @@
             var cell3 = row.insertCell(-1);
             var cell4 = row.insertCell(-1);
             var cell5 = row.insertCell(-1);
-            var cell6 = row.insertCell(-1);
-            var cell7 = row.insertCell(-1);
             cell1.innerHTML = hole_no;
             cell2.innerHTML = counter;
             cell3.innerHTML = island_18_holes[hole_no - 1][0];
             cell4.innerHTML = island_18_holes[hole_no - 1][1];
-            cell5.innerHTML = club_choice
-            cell6.innerHTML = Math.round(distance*10)/10;
-            cell7.innerHTML = 0;
+            cell5.innerHTML = 0;
+
+            var stroketable = document.getElementById("stroke_table");
+            var strokerow = stroketable.insertRow();
+            var cell1 = strokerow.insertCell(-1);
+            var cell2 = strokerow.insertCell(-1);
+            var cell3 = strokerow.insertCell(-1);
+            var cell4 = strokerow.insertCell(-1);
+            cell1.innerHTML = hole_no
+            cell2.innerHTML = counter
+            cell3.innerHTML = club_choice
+            cell4.innerHTML = Math.round(distance*10)/10;
             list = []
             counter = 0
             var table = document.getElementById("dist_table");
