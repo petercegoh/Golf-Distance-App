@@ -32,7 +32,13 @@
         <option value="18">18</option>
       </select>
 
-      <label for="club">Select your club:</label>
+
+
+      <label for="button">Every time before you hit a ball, record your location using this button to view your distance to the hole</label>
+      <button type="button" onclick="getLocation()">Check your distance to the hole</button>
+
+
+      <label for="club">After being informed by the distance, select your club and confirm it!:</label>
       <select id="club" name="club" size="8">
         <option value="none" selected>Club</option>
         <option value="Driver">Driver</option>
@@ -51,9 +57,8 @@
         <option value="Lw">Lw</option>
         <option value="Putter">Putter</option>
       </select>
+      <button type="button" onclick="confirmClub()">Confirm Club Choice</button>
 
-      <label for="button">Every time before you hit a ball, record your location using this button to view your distance to the hole</label>
-      <button type="button" onclick="getLocation()">Check your distance to the hole</button>
       <label for="button">If the ball rolls in, press this button to complete the hole</label>
       <button type="button" onclick="finishHole()">Holed it!</button>
 
@@ -99,8 +104,6 @@
             hole_no = document.getElementById("hole").value
             //alert("Hole Number: " + hole_no)
 
-            club_choice = document.getElementById("club").value
-            club_list.push(club_choice)
 
             const destination_point = new google.maps.LatLng(island_18_holes[hole_no - 1][0], island_18_holes[hole_no - 1][1]);
             //alert("Coords of hole " + hole_no + ": " + destination_point)
@@ -189,7 +192,6 @@
             strokeseparatorCell.colSpan = 4; // span all columns in the table
             //separatorCell.innerHTML = "<hr>";
             strokeseparatorCell.style.borderTop = "5px solid black";
-
           }
 
         function showPosition(position) {
@@ -206,6 +208,11 @@
               alert("Geolocation is not supported by this browser.");
             }
             }
+
+        function chooseClub(){
+          club_choice = document.getElementById("club").value
+          club_list.push(club_choice)
+        }
 
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLiRWHgBfiUwIzOl1y2SJu8lChZvBP1RA&libraries=geometry,elevation">
